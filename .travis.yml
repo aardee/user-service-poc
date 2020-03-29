@@ -14,12 +14,13 @@ env:
 
 after_success:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export REPO=$DOCKER_REPO
-  - echo $DOCKER_REPO
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - echo $COMMIT
-  - echo "${TAG}"
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO  
+  - docker build -f Dockerfile -t $COMMIT .
+  - docker tag $COMMIT $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker image ls
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then 
+      docker tag $COMMIT $DOCKER_REPO:latest 
+      docker push $DOCKER_REPO $DOCKER_REPO:latest 
+    else 
+      docker tag $COMMIT $DOCKER_REPO:v-$TRAVIS_BUILD_NUMBER 
+      docker push $DOCKER_REPO v-$TRAVIS_BUILD_NUMBER 
+    fi
