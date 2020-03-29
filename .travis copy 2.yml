@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t aardee/user-service-poc -f Dockerfile.dev . 
+
+script:
+  - docker run aardee/user-service-poc npm run test -- --coverage
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - docker build -f Dockerfile -t $COMMIT .
+  - docker tag $COMMIT aardee/user-service-poc:travis-$TRAVIS_BUILD_NUMBER
+  - docker tag $COMMIT aardee/user-service-poc:latest
+  - docker push aardee/user-service-poc:latest
