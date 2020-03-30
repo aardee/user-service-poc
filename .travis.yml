@@ -18,6 +18,6 @@ after_success:
   - docker tag $COMMIT $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - echo "$TAG"
-  - docker tag $COMMIT $DOCKER_REPO:$TAG 
-  - docker push $DOCKER_REPO $DOCKER_REPO:$TAG ;
+  - docker tag $COMMIT $DOCKER_REPO:$TAG
+  - docker push $DOCKER_REPO $DOCKER_REPO:$TAG
 
