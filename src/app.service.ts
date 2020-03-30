@@ -11,7 +11,7 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    return 'Hello World!'
+    return 'User Microervice'
   }
 
   async authenticate(user: User): Promise< any | {status: number} > {
