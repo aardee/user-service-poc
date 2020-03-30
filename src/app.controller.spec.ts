@@ -22,8 +22,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "User Microervice"', () => {
-      expect(appController.getHello()).toBe('User Microervice');
+    it('should return "User Microservice"', () => {
+      expect(appController.getHello()).toBe('User Microservice');
     });
   });
 });
