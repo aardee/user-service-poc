@@ -3,23 +3,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t aardee/user-service-poc -f Dockerfile.dev . 
+  - docker build -t $DOCKER_REPO -f Dockerfile.dev . 
 
 script:
-  - docker run aardee/user-service-poc npm run test -- --coverage
+  - docker run $DOCKER_REPO npm run test -- --coverage
 
 env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
 
 after_success:
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export REPO=$DOCKER_REPO
-  - echo $REPO
+  - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+  - docker build -f Dockerfile -t $COMMIT .
+  - docker tag $COMMIT $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - echo $COMMIT
-  - echo $TAG
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO  
+  - echo "$TAG"
+  - docker tag $COMMIT $DOCKER_REPO:$TAG
+  - docker push $DOCKER_REPO:$TAG
+
