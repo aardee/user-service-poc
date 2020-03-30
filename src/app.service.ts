@@ -14,6 +14,11 @@ export class AppService {
     return 'User Microservice'
   }
 
+  /**
+   * Authenticates the user and generates a JWT token that can be passed
+   * to the next microservice
+   * @param user User data provided by the client
+   */
   async authenticate(user: User): Promise< any | {status: number} > {
     //Validate User
     return this.userService.findByEmail(user.email)
