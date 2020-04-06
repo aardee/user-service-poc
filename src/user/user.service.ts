@@ -3,18 +3,29 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
+    async verifyToken(token: string) {
+        //Verify the USER TOKEN, get user details from the DB
+        //This POC code simply returns hard coded user...
+
+        return this.getUser()
+    }
 
     async findByEmail(email: string): Promise<User> {
         console.log(email)
         let user = null;
         if (email === 'admin@poc.com') {
-            user = new User()
-            user.id = 1
-            user.email = 'admin@poc.com'
-            user.first_name = 'Jane'
-            user.last_name = 'Doe'
-            user.roles = ['ADMIN', 'USER', 'EDITOR']
+            user = this.getUser()
         }
         return (user != null) ? Promise.resolve (user) : Promise.reject("Invalid user")
+    }
+
+    private getUser() {
+        let user = new User();
+        user.id = 1;
+        user.email = 'admin@poc.com';
+        user.first_name = 'Jane';
+        user.last_name = 'Doe';
+        user.roles = ['ADMIN', 'USER', 'EDITOR'];
+        return user;
     }
 }

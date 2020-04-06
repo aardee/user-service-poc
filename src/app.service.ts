@@ -15,11 +15,22 @@ export class AppService {
   }
 
   /**
+   * Authenticates the user using specified Authorization token
+   * @param user User data provided by the client
+   */
+  async authenticate(token: String): Promise<User> {
+    const jwt =  token.split(" ")[1]
+    console.log("Processing JWT : " + jwt) 
+
+    return this.userService.verifyToken(jwt)
+  }
+
+  /**
    * Authenticates the user and generates a JWT token that can be passed
    * to the next microservice
    * @param user User data provided by the client
    */
-  async authenticate(user: User): Promise< any | {status: number} > {
+  async authenticate1(user: User): Promise< any | {status: number} > {
     //Validate User
     return this.userService.findByEmail(user.email)
       .then((userData) => {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Headers } from '@nestjs/common';
 import { AppService } from './app.service';
 import { User } from './user/user.entity';
 
@@ -8,11 +8,19 @@ export class AppController {
 
   @Get()
   getHello(): string {
+    console.log("UserService::Hello called")
     return this.appService.getHello();
   }
 
+  // @Post('auth')
+  // async authenticate(@Body() user: User): Promise<any> {
+  //   return this.appService.authenticate(user);
+  // }  
+
   @Post('auth')
-  async authenticate(@Body() user: User): Promise<any> {
-    return this.appService.authenticate(user);
+  async authenticate(@Headers('authorization') token): Promise<any> {
+    console.log(token)
+    //Handle unauthenticated user condition...
+    return this.appService.authenticate(token)
   }  
 }
