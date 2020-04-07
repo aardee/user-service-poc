@@ -10,8 +10,8 @@ export class AppService {
     private readonly jwtService: JwtService
   ) {}
 
-  getHello(): string {
-    return 'User Microservice'
+  health(): string {
+    return 'User Microservice is working!!!'
   }
 
   /**

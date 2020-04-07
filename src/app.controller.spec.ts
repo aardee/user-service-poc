@@ -23,7 +23,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "User Microservice"', () => {
-      expect(appController.getHello()).toBe('User Microservice');
+      expect(appController.health()).toBe('User Microservice is working!!!');
     });
   });
 });

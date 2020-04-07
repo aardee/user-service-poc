@@ -6,10 +6,10 @@ import { User } from './user/user.entity';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
+  @Get('health')
+  health(): string {
     console.log("UserService::Hello called")
-    return this.appService.getHello();
+    return this.appService.health();
   }
 
   // @Post('auth')
