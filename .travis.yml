@@ -10,7 +10,7 @@ script:
   - |
     if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker build -t $DOCKER_REPO -f Dockerfile . 
-      docker build -t $DOCKER_INIT_REPO -f user-service-init/Dockerfile . 
+      docker build -t $DOCKER_INIT_REPO -f user-service-init/Dockerfile user-service-init
     else
       docker build -t $DOCKER_REPO -f Dockerfile.dev . 
       docker run $DOCKER_REPO npm run test -- --coverage
