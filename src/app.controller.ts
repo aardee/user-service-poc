@@ -8,7 +8,6 @@ export class AppController {
 
   @Get('health')
   health(): string {
-    console.log("UserService::Hello called")
     return this.appService.health();
   }
 
